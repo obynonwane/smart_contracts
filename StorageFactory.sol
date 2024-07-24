@@ -11,8 +11,23 @@ contract StorageFactory {
     // and then save it in a state variable 
     function createSimpleStorageContract () public {
         //the new keyword is how solidity know to deploy a contract
-        // simpleStorage = new SimpleStorage();
-         listOfSimpleStorageContract.push(new SimpleStorage());
+        SimpleStorage simpleStorage = new SimpleStorage();
+        listOfSimpleStorageContract.push(simpleStorage);
+    }
 
+    function sfStore(uint256 _simpleStorageIndex, uint256 _newsimpleStorageNumber) public {
+        //to interact with a contract you need 
+        // 1. The contract address 
+        // 2. The Contract ABI Application Binary Interface- technicaly just the function selector
+
+        //Access the contract address and call store method on it 
+        SimpleStorage mySimpleStorage = listOfSimpleStorageContract[_simpleStorageIndex];
+        mySimpleStorage.store(_newsimpleStorageNumber);
+    }
+
+    //this function call the retrieve in simpleStorage function
+    function sfGet(uint256 _simpleStorageIndex) public view returns(uint256){
+         SimpleStorage mySimpleStorage = listOfSimpleStorageContract[_simpleStorageIndex];
+        return mySimpleStorage.retrieve();
     }
 }
